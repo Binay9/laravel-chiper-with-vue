@@ -2,6 +2,7 @@
 import Dropdown from '@/Components/Dropdown.vue';
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import DropdownLink from '@/Components/DropdownLink.vue';
 import { useForm } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -55,11 +56,14 @@ const editing = ref(false);
                             @click="editing = true">
                             Edit
                         </button>
+                        <DropdownLink as="button" :href="route('chirps.destroy', chirp.id)" method="delete">
+                            Delete
+                        </DropdownLink>
                     </template>
                 </Dropdown>
             </div>
             <form v-if="editing"
-                @submit.prevent="from.put(route('chirps.update, chirp.id'), { onSuccess: () => editing = false })">
+                @submit.prevent="form.put(route('chirps.update', chirp.id), { onSuccess: () => editing = false })">
                 <textarea v-model="form.message"
                     class="mt-4 w-full text-gray-900 border-gray-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"></textarea>
                 <InputError :message="form.errors.message" class="mt-2" />
